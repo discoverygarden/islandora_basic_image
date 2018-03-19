@@ -21,7 +21,7 @@
  *   TRUE if successful, FALSE otherwise.
  */
 function islandora_basic_image_scale_image($file, $width, $height, $upscale = TRUE) {
-  $real_path = drupal_realpath($file->uri);
+  $real_path = \Drupal::service("file_system")->realpath($file->uri);
   $image = image_load($real_path);
   try {
     if (!empty($image)) {
@@ -72,7 +72,7 @@ function islandora_basic_image_add_datastream(AbstractObject $object, $dsid, $fi
     if ($ds->mimeType != $file->filemime) {
       $ds->mimeType = $file->filemime;
     }
-    $ds->setContentFromFile(drupal_realpath($file->uri));
+    $ds->setContentFromFile(\Drupal::service("file_system")->realpath($file->uri));
     if ($ingest) {
       $object->ingestDatastream($ds);
     }
@@ -163,7 +163,7 @@ function islandora_basic_image_create_medium_size(AbstractObject $object, $force
     }
     else {
       $medium_file = file_copy($original_file['file'], 'temporary://' . $original_file['filename'] . 'TN.' . $original_file['extension']);
-      $upscale = variable_get('islandora_basic_image_upscale_images', TRUE);
+      $upscale = \Drupal::config('islandora_basic_image.settings')->get('islandora_basic_image_upscale_images');
       if (islandora_basic_image_scale_image($medium_file, 500, 700, $upscale)) {
         $added_successfully = islandora_basic_image_add_datastream($object, 'MEDIUM_SIZE', $medium_file);
         if ($added_successfully !== TRUE) {

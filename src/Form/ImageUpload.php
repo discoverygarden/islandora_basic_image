@@ -81,8 +81,8 @@ class ImageUpload extends FormBase {
       }
       $file = $this->fileEntityStorage->load(reset($form_state->getValue('file')));
       $ds->setContentFromFile($file->getFileUri(), FALSE);
-      $ds->label = $file->getFilename;
-      $ds->mimetype = $file->getMimeType;
+      $ds->label = $file->getFilename();
+      $ds->mimetype = $file->getMimeType();
     }
   }
 

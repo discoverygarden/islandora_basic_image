@@ -208,9 +208,7 @@ function islandora_basic_image_islandora_sp_basic_image_islandora_ingest_steps()
     'islandora_basic_image' => [
       'weight' => 10,
       'type' => 'form',
-      'form_id' => 'islandora_basic_image_image_upload_form',
-      'module' => 'islandora_basic_image',
-      'file' => 'includes/image_upload.form.inc',
+      'form_class' => 'Drupal\islandora_basic_image\Form\ImageUpload',
     ],
   ];
 }

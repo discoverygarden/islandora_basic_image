@@ -5,6 +5,8 @@
  * Functions deriving images for objects.
  */
 
+use Drupal\islandora\MimeDetect;
+
 /**
  * Scales the given image.
  *

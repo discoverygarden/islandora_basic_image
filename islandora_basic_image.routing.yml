@@ -1,0 +1,7 @@
+islandora_basic_image.admin:
+  path: '/admin/config/islandora/solution_pack_config/basic_image'
+  defaults:
+    _title: 'Basic Image Solution Pack'
+    _form: '\Drupal\islandora_basic_image\Form\Admin'
+  requirements:
+    _permission: 'administer site configuration'

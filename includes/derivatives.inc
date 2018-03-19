@@ -34,11 +34,11 @@ function islandora_basic_image_scale_image($file, $width, $height, $upscale = TR
   catch (exception $e) {
     drupal_set_message(t(
         "Basic image failed to scale image with message: '@message'",
-        array("@message" => $e->getMessage())));
+        ["@message" => $e->getMessage()]));
     watchdog(
       'islandora_basic_image',
       'Basic image failed to scale image.<br/> With stack: @trace',
-      array('@trace' => $e->getTraceAsString()),
+      ['@trace' => $e->getTraceAsString()],
       WATCHDOG_ERROR
     );
   }
@@ -80,9 +80,9 @@ function islandora_basic_image_add_datastream(AbstractObject $object, $dsid, $fi
     return TRUE;
   }
   catch (exception $e) {
-    $variables = array(
+    $variables = [
       '@ret' => $e->getTraceAsString(),
-    );
+    ];
     watchdog('islandora_basic_image', 'Basic image failed to add data stream.<br/>Error: @ret', $variables, WATCHDOG_ERROR);
     $message = $e->getMessage();
     return $message;
@@ -117,16 +117,16 @@ function islandora_basic_image_create_thumbnail(AbstractObject $object, $force =
           $return = islandora_basic_image_failed_adding($added_successfully);
         }
         else {
-          $return = array(
+          $return = [
             'success' => TRUE,
-            'messages' => array(
-              array(
+            'messages' => [
+              [
                 'message' => t('The TN datastream was added successfully for @pid!'),
-                'message_sub' => array('@pid' => $object->id),
+                'message_sub' => ['@pid' => $object->id],
                 'type' => 'dsm',
-              ),
-            ),
-          );
+              ],
+            ],
+          ];
         }
       }
       else {
@@ -139,7 +139,6 @@ function islandora_basic_image_create_thumbnail(AbstractObject $object, $force =
     return $return;
   }
 }
-
 
 /**
  * Creates the MEDIUM_SIZE derivative for basic image.
@@ -170,16 +169,16 @@ function islandora_basic_image_create_medium_size(AbstractObject $object, $force
           $return = islandora_basic_image_failed_adding($added_successfully);
         }
         else {
-          $return = array(
+          $return = [
             'success' => TRUE,
-            'messages' => array(
-              array(
+            'messages' => [
+              [
                 'message' => t('The MEDIUM_SIZE datastream was added successfully for @pid!'),
-                'message_sub' => array('@pid' => $object->id),
+                'message_sub' => ['@pid' => $object->id],
                 'type' => 'dsm',
-              ),
-            ),
-          );
+              ],
+            ],
+          ];
         }
       }
       else {
@@ -199,7 +198,7 @@ function islandora_basic_image_create_medium_size(AbstractObject $object, $force
  * @param AbstractObject $object
  *   An AbstractObject representing an object within Fedora.
  *
- * @return array|stdClass
+ * @return array|bool
  *   FALSE when the object doesn't have the OBJ, an array otherwise.
  */
 function islandora_basic_image_copy_obj_datastream(AbstractObject $object) {
@@ -220,11 +219,11 @@ function islandora_basic_image_copy_obj_datastream(AbstractObject $object) {
   $file->status = 0;
   $object['OBJ']->getContent($file_uri);
   $original_file = file_save($file);
-  return array(
+  return [
     'file' => $original_file,
     'extension' => $ext,
     'filename' => $file_name,
-  );
+  ];
 }
 
 /**
@@ -239,17 +238,17 @@ function islandora_basic_image_copy_obj_datastream(AbstractObject $object) {
  * @see hook_islandora_derivative()
  */
 function islandora_basic_image_no_obj_datastream($pid) {
-  return array(
+  return [
     'success' => FALSE,
-    'messages' => array(
-      array(
+    'messages' => [
+      [
         'message' => t('Could not create image derivatives for %s. No image file was uploaded.'),
-        'message_sub' => array('%s' => $pid),
+        'message_sub' => ['%s' => $pid],
         'type' => 'watchdog',
         'severity' => WATCHDOG_ERROR,
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 }
 
 /**
@@ -261,16 +260,16 @@ function islandora_basic_image_no_obj_datastream($pid) {
  * @see hook_islandora_derivative()
  */
 function islandora_basic_image_failed_scaling() {
-  return array(
+  return [
     'success' => FALSE,
-    'messages' => array(
-      array(
+    'messages' => [
+      [
         'message' => t('Unable to scale the image, the datastream was not added'),
         'type' => 'dsm',
         'severity' => 'warning',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 }
 
 /**
@@ -285,14 +284,14 @@ function islandora_basic_image_failed_scaling() {
  * @see hook_islandora_derivative()
  */
 function islandora_basic_image_failed_adding($message) {
-  return array(
+  return [
     'success' => FALSE,
-    'messages' => array(
-      array(
+    'messages' => [
+      [
         'message' => $message,
         'type' => 'watchdog',
         'severity' => WATCHDOG_ERROR,
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 }

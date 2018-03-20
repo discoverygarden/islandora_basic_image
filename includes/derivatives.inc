@@ -5,6 +5,7 @@
  * Functions deriving images for objects.
  */
 
+use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\file\FileInterface;
 use Drupal\file\Entity\File;
 
@@ -39,11 +40,9 @@ function islandora_basic_image_scale_image(FileInterface $image_file, $width, $h
     drupal_set_message(t(
         "Basic image failed to scale image with message: '@message'",
         ["@message" => $e->getMessage()]));
-    watchdog(
-      'islandora_basic_image',
+    \Drupal::logger('islandora_basic_image')->error(
       'Basic image failed to scale image.<br/> With stack: @trace',
-      ['@trace' => $e->getTraceAsString()],
-      WATCHDOG_ERROR
+      ['@trace' => $e->getTraceAsString()]
     );
   }
   return FALSE;
@@ -87,7 +86,10 @@ function islandora_basic_image_add_datastream(AbstractObject $object, $dsid, Fil
     $variables = [
       '@ret' => $e->getTraceAsString(),
     ];
-    watchdog('islandora_basic_image', 'Basic image failed to add data stream.<br/>Error: @ret', $variables, WATCHDOG_ERROR);
+    \Drupal::logger('islandora_basic_image')->error(
+      'Basic image failed to add data stream.<br/>Error: @ret',
+      $variables
+    );
     $message = $e->getMessage();
     return $message;
   }
@@ -248,7 +250,7 @@ function islandora_basic_image_no_obj_datastream($pid) {
         'message' => t('Could not create image derivatives for %s. No image file was uploaded.'),
         'message_sub' => ['%s' => $pid],
         'type' => 'watchdog',
-        'severity' => WATCHDOG_ERROR,
+        'severity' => RfcLogLevel::ERROR,
       ],
     ],
   ];
@@ -293,7 +295,7 @@ function islandora_basic_image_failed_adding($message) {
       [
         'message' => $message,
         'type' => 'watchdog',
-        'severity' => WATCHDOG_ERROR,
+        'severity' => RfcLogLevel::ERROR,
       ],
     ],
   ];

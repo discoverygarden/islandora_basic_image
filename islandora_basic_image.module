@@ -5,25 +5,30 @@
  * Handles the creation and display of basic image objects.
  */
 
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+
+use Drupal\islandora\DublinCore;
+
 /**
  * Implements hook_islandora_view_print_object().
  */
 function islandora_basic_image_islandora_view_print_object($object) {
-  $output = [];
   if (in_array('islandora:sp_basic_image', $object->models)) {
-    $resource_url = url("islandora/object/{$object->id}/datastream/OBJ/view");
-    $params = [
-      'title' => $object->label,
-      'path' => $resource_url,
-    ];
-
     // Theme the image seperatly.
-    $variables['islandora_img'] = theme('image', $params);
-    $output = theme('islandora_basic_image_print', [
-    'islandora_content' => $variables['islandora_img']]);
+    $print_image = [
+      '#theme' => 'image',
+      '#title' => $object->label,
+      '#uri' => Url::fromRoute('islandora.view_datastream_view', ['object' => $object->id, 'datastream' => 'OBJ'])->toString(),
+    ];
+    $variables['islandora_img'] = \Drupal::service('renderer')->render($print_image);
+    return [
+      '#theme' => 'islandora_basic_image_print',
+      '#islandora_content' => $variables['islandora_img'],
+    ];
   }
 
-  return $output;
+  return [];
 }
 
 /**
@@ -36,7 +41,6 @@ function islandora_basic_image_islandora_view_print_object($object) {
 function islandora_basic_image_theme($existing, $type, $theme, $path) {
   return [
     'islandora_basic_image' => [
-      'template' => 'theme/islandora-basic-image',
       // We can add PIDs to the end of this pattern in our preprocess function
       // and templates will be able to have have a pid appended to the
       // template name to overide a template on a per object basis.
@@ -46,7 +50,6 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
       'variables' => ['islandora_object' => NULL],
     ],
     'islandora_basic_image_print' => [
-      'template' => 'theme/islandora-basic-image-print',
       'variables' => ['islandora_content' => NULL],
     ],
   ];
@@ -101,18 +104,17 @@ function islandora_basic_image_islandora_required_objects(IslandoraTuque $connec
  * Implements hook_CMODEL_PID_islandora_view_object().
  */
 function islandora_basic_image_islandora_sp_basic_image_islandora_view_object($object, $page_number, $page_size) {
-  $output = theme('islandora_basic_image', array('islandora_object' => $object));
-  return array('' => $output);
+  return [
+    '#theme' => 'islandora_basic_image',
+    '#islandora_object' => $object,
+  ];
 }
 
 /**
  * Implements hook_preprocess_theme().
  */
 function template_preprocess_islandora_basic_image(array &$variables) {
-  drupal_add_js('misc/form.js');
-  drupal_add_js('misc/collapse.js');
   $islandora_object = $variables['islandora_object'];
-  $repository = $islandora_object->repository;
   module_load_include('inc', 'islandora', 'includes/datastream');
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/metadata');
@@ -138,33 +140,39 @@ function template_preprocess_islandora_basic_image(array &$variables) {
 
   // Original.
   if (isset($islandora_object['OBJ']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['OBJ'])) {
-    $full_size_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/view", array('absolute' => TRUE));
-    $variables['islandora_full_url'] = $full_size_url;
-    $params = [
-      'title' => $islandora_object->label,
-      'path' => $full_size_url,
+    $full_size_url = Url::fromRoute('islandora.view_datastream_view', ['object' => $islandora_object->id, 'datastream' => 'OBJ']);
+    $variables['islandora_full_url'] = $full_size_url->toString();
+    $full_image = [
+      '#theme' => 'image',
+      '#title' => $islandora_object->label,
+      '#uri' => $full_size_url->toString(),
     ];
-    $variables['islandora_full_img'] = theme('image', $params);
+    $variables['islandora_full_img'] = \Drupal::service('renderer')->render($full_image);
   }
   // Thumbnail.
   if (isset($islandora_object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['TN'])) {
-    $thumbnail_size_url = url("islandora/object/{$islandora_object->id}/datastream/TN/view");
-    $params = [
-      'title' => $islandora_object->label,
-      'path' => $thumbnail_size_url,
+    $thumbnail_size_url = Url::fromRoute('islandora.view_datastream_view', ['object' => $islandora_object->id, 'datastream' => 'TN'])->toString();
+    $thumbnail_image = [
+      '#theme' => 'image',
+      '#title' => $islandora_object->label,
+      '#uri' => $thumbnail_size_url,
     ];
-    $variables['islandora_thumbnail_img'] = theme('image', $params);
+    $variables['islandora_thumbnail_img'] = \Drupal::service('renderer')->render($thumbnail_image);
   }
   // Medium size.
   if (isset($islandora_object['MEDIUM_SIZE']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['MEDIUM_SIZE'])) {
-    $medium_size_url = url("islandora/object/{$islandora_object->id}/datastream/MEDIUM_SIZE/view");
-    $params = [
-      'title' => $islandora_object->label,
-      'path' => $medium_size_url,
+    $medium_size_url = Url::fromRoute('islandora.view_datastream_view', ['object' => $islandora_object->id, 'datastream' => 'MEDIUM_SIZE'])->toString();
+    $medium_image = [
+      '#theme' => 'image',
+      '#title' => $islandora_object->label,
+      '#uri' => $medium_size_url,
     ];
-    $variables['islandora_medium_img'] = theme('image', $params);
+    $variables['islandora_medium_img'] = \Drupal::service('renderer')->render($medium_image);
     if (isset($full_size_url)) {
-      $variables['islandora_content'] = l($variables['islandora_medium_img'], $full_size_url, array('html' => TRUE));
+      $variables['islandora_content'] = Link::fromTextAndUrl(
+        $variables['islandora_medium_img'],
+        $full_size_url
+      );
     }
     else {
       $variables['islandora_content'] = $variables['islandora_medium_img'];

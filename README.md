@@ -24,7 +24,7 @@ Install as
 ## Configuration
 
 Configure the image-tool kit to use ImageMagick rather than GD in
-Administration > Configuration > Media > Image Toolkit
+Configuration > Media > Image Toolkit
 (admin/config/media/image-toolkit). If GD is selected, TN and JPG datastreams
 will not be generated.
 
@@ -34,9 +34,9 @@ will not be generated.
 +![0000 basic image
 001](https://cloud.githubusercontent.com/assets/2738244/24003797/d6aea9da-0a3a-11e7-9c30-d40a0e5240b3.png)
 If you wish to prevent image upscaling for images under 500x700 select the
-configuration option present at Administration > Islandora > Solution pack
+configuration option present at Configuration > Islandora > Solution pack
 configuration > Basic Image Solution Pack
-(admin/islandora/solution_pack_config/basic_image).
+(admin/config/islandora/solution_pack_config/basic_image).
 
 ## Documentation
 

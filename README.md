@@ -40,8 +40,8 @@ configuration > Basic Image Solution Pack
 
 ## Documentation
 
-Further documentation for this module is available at
-[our wiki](https://wiki.duraspace.org/display/ISLANDORA/Basic+Image+Solution+Pack).
+Further documentation for this module is available at [our
+wiki](https://wiki.duraspace.org/display/ISLANDORA/Basic+Image+Solution+Pack).
 
 ## Troubleshooting/Issues
 

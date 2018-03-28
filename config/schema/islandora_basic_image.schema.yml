@@ -1,0 +1,6 @@
+islandora_basic_image.settings:
+  type: mapping
+  label: Settings
+  mapping:
+    islandora_basic_image_upscale_images:
+      type: boolean

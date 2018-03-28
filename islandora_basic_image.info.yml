@@ -1,0 +1,10 @@
+name: 'Islandora basic image'
+description: 'A default Islandora Repository module to handle images'
+dependencies:
+  - :islandora
+  - imagemagick:imagemagick
+package: 'Islandora Solution Packs'
+configure: islandora_basic_image.admin
+core: 8.x
+type: module
+php: '5.5.9'

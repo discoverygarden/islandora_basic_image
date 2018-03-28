@@ -1,0 +1,5 @@
+islandora_basic_image.admin:
+  route_name: islandora_basic_image.admin
+  parent: islandora.solution_packs_admin
+  title: 'Basic Image Solution Pack'
+  description: 'Define ingest behavior and configuration.'

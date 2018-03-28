@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * This is the template file for the object page for basic image.
+ *
+ * @TODO: add documentation about file and available variables
+ */
+#}
+
+<div class="islandora-basic-image-object islandora" vocab="http://schema.org/" prefix="dcterms: http://purl.org/dc/terms/" typeof="ImageObject">
+  <div class="islandora-basic-image-content-wrapper clearfix">
+    {% if islandora_content is defined %}
+      <div class="islandora-basic-image-content">
+        {{ islandora_content }}
+      </div>
+    {% endif %}
+  </div>
+  <div class="islandora-basic-image-metadata">
+    {{ description }}
+    {% if parent_collections %}
+      <div>
+        <h2>{{ 'In collections'|t }}</h2>
+        <ul>
+          {% for collection in parent_collections %}
+            <li>
+              <a href="{{ path('islandora.view_object', {'object' : collection.id}) }}">{{ collection.label }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    {{ metadata }}
+  </div>
+</div>

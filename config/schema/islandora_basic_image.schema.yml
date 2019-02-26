@@ -1,5 +1,5 @@
 islandora_basic_image.settings:
-  type: mapping
+  type: config_object
   label: Settings
   mapping:
     islandora_basic_image_upscale_images:

@@ -186,6 +186,7 @@ function template_preprocess_islandora_basic_image(array &$variables) {
 function islandora_basic_image_xml_form_builder_form_associations() {
   return [
     'islandora_basic_image_mods_form' => [
+      'self_transform' => 'islandora_cleanup_mods_extended.xsl',
       'content_model' => 'islandora:sp_basic_image',
       'form_name' => 'Basic image MODS form',
       'dsid' => 'MODS',

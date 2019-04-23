@@ -30,7 +30,7 @@ function islandora_basic_image_scale_image(FileInterface $image_file, $width, $h
   $image = Drupal::service('image.factory')->get($image_file->getFileUri());
   try {
     if (!empty($image)) {
-      $scale = $image->scale($width, $height);
+      $scale = $image->scale($width, $height, $upscale);
       if ($scale) {
         return $image->save();
       }

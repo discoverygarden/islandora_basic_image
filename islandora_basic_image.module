@@ -260,7 +260,7 @@ function islandora_basic_image_help($route) {
       $output .= '<p>' . t(
         'The Islandora Basic Image module allows users to add and manage
         image files of types GIF, PNG, and JPG/JPEG without a separate viewer.
-        Thumbnail images are derived for display in the collect. Medium sized
+        Thumbnail images are derived for display in the collection. Medium sized
         previews are derived for the View tab of the image object. The image
         can be viewed in its original form by clicking on the image in its View
         tab.

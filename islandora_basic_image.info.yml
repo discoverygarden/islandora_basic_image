@@ -1,5 +1,5 @@
 name: 'Islandora basic image'
-description: 'A default Islandora Repository module to handle images'
+description: 'Adds image ingest and display functionality.'
 dependencies:
   - :islandora
   - imagemagick:imagemagick

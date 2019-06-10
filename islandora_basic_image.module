@@ -257,17 +257,17 @@ function islandora_basic_image_help($route) {
     case 'help.page.islandora_basic_image':
       // About section.
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Islandora Basic Image module allows users to add and manage image files of types GIF, PNG, and JPG/JPEG without a separate viewer. Thumbnail images are derived for display in the collection. Medium sized previews are derived for the View tab of the image object. The image can be viewed in its original form by clicking on the image in its View tab. See the <a href=":wiki">Islandora Basic Image Solution Pack wiki*</a> for more information.', [
+      $output .= '<p>' . t('The Islandora Basic Image module allows users to add and manage image files of types GIF, PNG, and JPG/JPEG without a separate viewer. Thumbnail images are derived for display in the collection view. Medium sized previews are derived for the View tab of the image object. The image can be viewed in its original form by clicking on the image in its View tab. See the <a href=":wiki">Islandora Basic Image Solution Pack wiki*</a> for more information.', [
         ':wiki' => 'https://wiki.duraspace.org/display/ISLANDORA/Basic+Image+Solution+Pack',
       ]) .
       '</p>';
       // Uses section.
       $output .= '<h3>' . t('Uses') . '</h3>';
       $output .= '<dt>' . t('Upload Image Objects') . '</dt><dd>';
-      $output .= t('In the "Manage" tab of the Basic Image Collection, click "Add an object to this Collection", and follow the ingest form.') .
+      $output .= t('In the "Manage" tab of any collection configured to accept the Islandora Basic Image Content Model, click "Add an object to this Collection", and follow the ingest form.') .
       '</dd>';
       $output .= '<dt>' . t('View Image Objects') . '</dt><dd>';
-      $output .= t('In the "View" tab of the Basic Image Colleciton, click on the thumbnail for your desired image object; that will bring you to the medium size preview in the "View" tab of the object. Clicking on the medium size preview of the image will allow you to full-screen the image to see its original size.') .
+      $output .= t('In the "View" tab of an image colleciton, click on the thumbnail for your desired image object; that will bring you to the medium size preview in the "View" tab of the object. Clicking on the medium size preview of the image will allow you to full-screen the image to see its original size.') .
       '</dd>';
       $output .= '<dt>' . t('Download Image Objects') . '</dt><dd>';
       $output .= t('There are two ways to download a basic image from your website:</br>1. You can navigate to the full-screen view, right-click on the image, and click "Save image as..." or "Download image" etc.</br>2. You can go to the "Manage" page of your desired object, click on the "Datastreams" section and, click "Download" next to the OBJ datastream.') .
